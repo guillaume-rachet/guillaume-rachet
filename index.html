@@ -88,7 +88,8 @@
       width: 210mm;
       min-height: 297mm;
       background: #ffffff;
-      padding: 38px 42px 34px;
+      padding: 34px 42px 34px;
+      border-top: 5px solid #111827; /* Black top accent bar */
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
       position: relative;
       margin: 0 auto;
@@ -98,8 +99,9 @@
     .fc-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 22px;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-top: 4px;
     }
 
     .fc-title-group h1 {
@@ -124,12 +126,12 @@
     }
 
     .fc-photo {
-      width: 78px;
-      height: 78px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-      border: 2px solid #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+      border: 3px solid #fff;
     }
 
     /* 2-Column Grid */
@@ -198,8 +200,10 @@
     }
 
     .fc-sidebar-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       font-size: 11px;
-      line-height: 1.55;
       color: #222;
       margin-bottom: 20px;
     }
@@ -207,8 +211,17 @@
     .fc-contact-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-bottom: 4px;
+      gap: 7px;
+      line-height: 1.35;
+    }
+
+    .fc-contact-icon {
+      width: 16px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      font-size: 11.5px;
     }
 
     .fc-contact-item a {
@@ -406,12 +419,22 @@
 
         <!-- CONTACT -->
         <div class="fc-sidebar-section fc-sidebar-contact">
-          <div class="fc-contact-item">📍 Dublin, Ireland</div>
-          <div class="fc-contact-item">✉️ <a href="mailto:guillaume.rachet@gmail.com">guillaume.rachet@gmail.com</a></div>
-          <div class="fc-contact-item">📞 +353 874 256 355</div>
-          <div style="height: 6px;"></div>
           <div class="fc-contact-item">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            <span class="fc-contact-icon">📍</span>
+            <span>Dublin, Ireland</span>
+          </div>
+          <div class="fc-contact-item">
+            <span class="fc-contact-icon">✉️</span>
+            <a href="mailto:guillaume.rachet@gmail.com">guillaume.rachet@gmail.com</a>
+          </div>
+          <div class="fc-contact-item">
+            <span class="fc-contact-icon">📞</span>
+            <span>+353 874 256 355</span>
+          </div>
+          <div class="fc-contact-item">
+            <span class="fc-contact-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            </span>
             <a href="https://www.linkedin.com/in/guillaume-rachet" target="_blank">linkedin.com/in/guillaume-rachet</a>
           </div>
         </div>
