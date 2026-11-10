@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guillaume Rachet — Resume & Interactive Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================
+       RESET & BASE SETUP
+       ========================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0f172a;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1e293b;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =========================================
+       TOP CONTROL BAR (Hidden on Print)
+       ========================================= */
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: #f8fafc;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      background: #3b82f6;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .theme-selector-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .theme-select {
+      background: transparent;
+      border: none;
+      color: #f8fafc;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+      outline: none;
+      border-radius: 6px;
+    }
+
+    .theme-select option {
+      background: #1e293b;
+      color: #f8fafc;
+    }
+
+    .theme-pills {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      max-width: 580px;
+      scrollbar-width: none;
+    }
+    .theme-pills::-webkit-scrollbar { display: none; }
+
+    .theme-pill-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #94a3b8;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .theme-pill-btn:hover {
+      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .theme-pill-btn.active {
+      color: #fff;
+      background: #2563eb;
+      border-color: #3b82f6;
+      font-weight: 600;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .toggle-photo-btn {
+      font-size: 11.5px;
+      padding: 6px 10px;
+    }
+
+    /* =========================================
+       RESUME CANVAS & CONTAINER
+       ========================================= */
+    .preview-canvas {
+      padding: 40px 16px 80px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: calc(100vh - 70px);
+    }
+
+    .resume-sheet {
+      width: 210mm;
+      min-height: 297mm;
+      background: #ffffff;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      margin: 0 auto;
+      transition: all 0.2s ease;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: transparent !important;
+        color: #000 !important;
+      }
+      .toolbar {
+        display: none !important;
+      }
+      .preview-canvas {
+        padding: 0 !important;
+      }
+      .resume-sheet {
+        box-shadow: none !important;
+        margin: 0 !important;
+        width: 210mm !important;
+        min-height: 297mm !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+      }
+    }
+
+    /* =========================================
+       THEME 1: FIGMA CLASSIC (Exact 1:1 Replica)
+       ========================================= */
+    .theme-figma-classic {
+      padding: 38px 42px 34px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #222;
+      background: #fff;
+    }
+
+    .theme-figma-classic .fc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+
+    .theme-figma-classic .fc-title-group h1 {
+      font-size: 30px;
+      font-weight: 800;
+      color: #000;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .theme-figma-classic .fc-title-group .fc-subtitle {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 3px;
+    }
+
+    .theme-figma-classic .fc-title-group .fc-specialization {
+      font-size: 13.5px;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .theme-figma-classic .fc-photo {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      border: 2px solid #fff;
+    }
+
+    .theme-figma-classic .fc-columns {
+      display: grid;
+      grid-template-columns: 1fr 215px;
+      gap: 34px;
+    }
+
+    .theme-figma-classic .fc-role-block {
+      margin-bottom: 16px;
+    }
+
+    .theme-figma-classic .fc-company-header {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 3px;
+    }
+
+    .theme-figma-classic .fc-company-header span.dates {
+      color: #777;
+      font-weight: 500;
+    }
+
+    .theme-figma-classic .fc-role-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 6px;
+    }
+
+    .theme-figma-classic .fc-bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .theme-figma-classic .fc-bullet-list li {
+      position: relative;
+      padding-left: 14px;
+      font-size: 11px;
+      line-height: 1.42;
+      color: #2b2b2b;
+      margin-bottom: 6px;
+    }
+
+    .theme-figma-classic .fc-bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      top: -1px;
+      font-size: 12px;
+      color: #000;
+    }
+
+    .theme-figma-classic .fc-bullet-list li strong {
+      color: #000;
+      font-weight: 700;
+    }
+
+    .theme-figma-classic .fc-sidebar-section {
+      margin-bottom: 20px;
+    }
+
+    .theme-figma-classic .fc-sidebar-contact {
+      font-size: 11px;
+      line-height: 1.55;
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    .theme-figma-classic .fc-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .theme-figma-classic .fc-contact-item a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .theme-figma-classic .fc-contact-item a:hover {
+      text-decoration: underline;
+    }
+
+    .theme-figma-classic .fc-sidebar-heading {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #718096;
+      font-weight: 700;
+      margin-bottom: 10px;
+      margin-top: 14px;
+    }
+
+    .theme-figma-classic .fc-skill-block {
+      margin-bottom: 12px;
+    }
+
+    .theme-figma-classic .fc-skill-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 2px;
+    }
+
+    .theme-figma-classic .fc-skill-desc {
+      font-size: 10.5px;
+      color: #444;
+      line-height: 1.4;
+    }
+
+    .theme-figma-classic .fc-edu-item {
+      margin-bottom: 12px;
+    }
+
+    .theme-figma-classic .fc-edu-degree {
+      font-size: 11px;
+      font-weight: 700;
+      color: #000;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .theme-figma-classic .fc-edu-school {
+      font-size: 10.5px;
+      color: #444;
+      line-height: 1.35;
+    }
+
+    .theme-figma-classic .fc-edu-meta {
+      font-size: 10px;
+      color: #718096;
+      margin-top: 1px;
+    }
+
+    /* =========================================
+       THEME 2: MODERN EXECUTIVE (Stripe/Linear Style)
+       ========================================= */
+    .theme-modern-exec {
+      padding: 36px 42px;
+      font-family: 'Geist', 'Inter', sans-serif;
+      color: #0f172a;
+    }
+
+    .theme-modern-exec .me-header {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .theme-modern-exec .me-name {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #0f172a;
+      line-height: 1.1;
+    }
+
+    .theme-modern-exec .me-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2563eb;
+      margin-top: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .theme-modern-exec .me-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .theme-modern-exec .me-contact-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11px;
+      color: #475569;
+      margin-bottom: 18px;
+      background: #f8fafc;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .theme-modern-exec .me-contact-bar a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .theme-modern-exec .me-section-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #0f172a;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 4px;
+      margin: 16px 0 10px;
+    }
+
+    .theme-modern-exec .me-job {
+      margin-bottom: 12px;
+    }
+
+    .theme-modern-exec .me-job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .theme-modern-exec .me-job-role {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .theme-modern-exec .me-job-company {
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .theme-modern-exec .me-job-date {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .theme-modern-exec ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .theme-modern-exec li {
+      font-size: 11px;
+      line-height: 1.45;
+      color: #334155;
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 4px;
+    }
+
+    .theme-modern-exec li::before {
+      content: "▪";
+      position: absolute;
+      left: 2px;
+      color: #3b82f6;
+      font-size: 11px;
+    }
+
+    .theme-modern-exec li strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    /* =========================================
+       THEME 3: MINIMAL ATS CLEAN (Google/Meta Style)
+       ========================================= */
+    .theme-minimal-ats {
+      padding: 34px 44px;
+      font-family: 'Inter', Arial, sans-serif;
+      color: #000;
+      line-height: 1.4;
+    }
+
+    .theme-minimal-ats .ats-header {
+      text-align: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #111;
+      padding-bottom: 12px;
+    }
+
+    .theme-minimal-ats h1 {
+      font-size: 26px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .theme-minimal-ats .ats-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 6px;
+    }
+
+    .theme-minimal-ats .ats-links {
+      font-size: 10.5px;
+      color: #333;
+    }
+
+    .theme-minimal-ats .ats-links a {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    .theme-minimal-ats h2 {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 2px;
+      margin: 14px 0 8px;
+    }
+
+    .theme-minimal-ats .ats-job-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 2px;
+    }
+
+    .theme-minimal-ats .ats-subline {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-style: italic;
+      color: #444;
+      margin-bottom: 4px;
+    }
+
+    .theme-minimal-ats ul {
+      margin-left: 18px;
+      margin-bottom: 10px;
+    }
+
+    .theme-minimal-ats li {
+      font-size: 10.8px;
+      line-height: 1.4;
+      color: #222;
+      margin-bottom: 3.5px;
+    }
+
+    /* =========================================
+       THEME 4: SWISS GRID / EDITORIAL
+       ========================================= */
+    .theme-swiss-grid {
+      padding: 38px 44px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #111;
+    }
+
+    .theme-swiss-grid .sg-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      border-bottom: 3px solid #111;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .theme-swiss-grid h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .theme-swiss-grid .sg-tagline {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e11d48;
+      margin-top: 6px;
+    }
+
+    .theme-swiss-grid .sg-contact {
+      text-align: right;
+      font-size: 10.5px;
+      line-height: 1.5;
+      color: #555;
+    }
+
+    .theme-swiss-grid .sg-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+
+    .theme-swiss-grid .sg-section-name {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #111;
+    }
+
+    /* =========================================
+       THEME 5: CUPERTINO / NEO-APPLE
+       ========================================= */
+    .theme-cupertino {
+      padding: 40px 46px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      color: #1d1d1f;
+    }
+
+    .theme-cupertino .cp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .theme-cupertino h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .theme-cupertino .cp-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .theme-cupertino .cp-pill {
+      font-size: 10.5px;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    /* =========================================
+       THEME 6: EDITORIAL SERIF (Prestige)
+       ========================================= */
+    .theme-editorial {
+      padding: 40px 46px;
+      background: #fdfbf7;
+      font-family: 'Newsreader', Georgia, serif;
+      color: #2c2a29;
+    }
+
+    .theme-editorial h1 {
+      font-size: 36px;
+      font-weight: 400;
+      font-style: italic;
+      color: #1a1918;
+      margin-bottom: 4px;
+    }
+
+    .theme-editorial .ed-sans {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .theme-editorial h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-bottom: 1px solid #dcd7cf;
+      padding-bottom: 4px;
+      margin: 16px 0 10px;
+    }
+
+    /* =========================================
+       THEME 7: DEV TERMINAL (Code-Centric)
+       ========================================= */
+    .theme-terminal {
+      padding: 34px 40px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #0f172a;
+    }
+
+    .theme-terminal .tm-header {
+      border: 1px solid #cbd5e1;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      background: #f8fafc;
+    }
+
+    .theme-terminal .tm-prompt {
+      color: #10b981;
+      font-weight: 700;
+    }
+
+    .theme-terminal h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .theme-terminal h2 {
+      font-size: 12px;
+      color: #2563eb;
+      margin: 14px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .theme-terminal h2::before {
+      content: "$ ";
+      color: #10b981;
+    }
+
+    /* =========================================
+       THEME 8: COMPACT HIGH-DENSITY
+       ========================================= */
+    .theme-compact {
+      padding: 26px 32px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      color: #111;
+    }
+
+    .theme-compact h1 { font-size: 24px; margin-bottom: 2px; }
+    .theme-compact .fc-bullet-list li { margin-bottom: 3px; font-size: 10px; line-height: 1.35; }
+    .theme-compact .fc-role-block { margin-bottom: 10px; }
+
+    /* =========================================
+       THEME 9: NORDIC SLATE
+       ========================================= */
+    .theme-nordic {
+      padding: 38px 44px;
+      font-family: 'Inter', sans-serif;
+      color: #1e293b;
+      border-top: 6px solid #0d9488;
+    }
+
+    .theme-nordic h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #0f766e;
+    }
+
+    .theme-nordic h2 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #0d9488;
+      border-bottom: 2px solid #ccfbf1;
+      padding-bottom: 4px;
+      margin: 16px 0 10px;
+    }
+
+    /* =========================================
+       THEME 10: BOLD LEADER / DIRECTOR
+       ========================================= */
+    .theme-bold-leader {
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #0f172a;
+    }
+
+    .theme-bold-leader .bl-banner {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      padding: 34px 44px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .theme-bold-leader .bl-banner h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .theme-bold-leader .bl-banner .bl-role {
+      font-size: 13.5px;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .theme-bold-leader .bl-body {
+      padding: 26px 44px 34px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================
+       TOP FLOATING TOOLBAR
+       ========================================= -->
+  <header class="toolbar no-print">
+    <div class="toolbar-left">
+      <div class="brand-title">
+        <span>Guillaume Rachet</span>
+        <span class="brand-badge">Resume Engine</span>
+      </div>
+
+      <div class="theme-selector-group">
+        <label for="themeSelect" style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding-left: 6px;">Design:</label>
+        <select id="themeSelect" class="theme-select" onchange="switchTheme(this.value)">
+          <option value="figma-classic" selected>1. Figma Classic (Original 2-Column)</option>
+          <option value="modern-exec">2. Modern Executive (Stripe/Linear)</option>
+          <option value="minimal-ats">3. Minimalist ATS Clean (Google/Meta)</option>
+          <option value="swiss-grid">4. Swiss Grid / Editorial</option>
+          <option value="cupertino">5. Cupertino / Neo-Apple</option>
+          <option value="editorial">6. Editorial Serif (Prestige)</option>
+          <option value="terminal">7. Dev Terminal (Monospace)</option>
+          <option value="compact">8. Compact High-Density</option>
+          <option value="nordic">9. Nordic Slate</option>
+          <option value="bold-leader">10. Bold Director & Leader</option>
+        </select>
+      </div>
+
+      <div class="theme-pills">
+        <button class="theme-pill-btn active" onclick="switchTheme('figma-classic')">Figma Classic</button>
+        <button class="theme-pill-btn" onclick="switchTheme('modern-exec')">Executive</button>
+        <button class="theme-pill-btn" onclick="switchTheme('minimal-ats')">ATS Minimal</button>
+        <button class="theme-pill-btn" onclick="switchTheme('swiss-grid')">Swiss</button>
+        <button class="theme-pill-btn" onclick="switchTheme('cupertino')">Cupertino</button>
+        <button class="theme-pill-btn" onclick="switchTheme('editorial')">Editorial</button>
+        <button class="theme-pill-btn" onclick="switchTheme('terminal')">Terminal</button>
+        <button class="theme-pill-btn" onclick="switchTheme('compact')">Compact</button>
+        <button class="theme-pill-btn" onclick="switchTheme('nordic')">Nordic</button>
+        <button class="theme-pill-btn" onclick="switchTheme('bold-leader')">Leader</button>
+      </div>
+    </div>
+
+    <div class="toolbar-right">
+      <button class="btn btn-secondary toggle-photo-btn" onclick="togglePhoto()">
+        <span id="photoToggleIcon">📷</span> Toggle Photo
+      </button>
+      <button class="btn btn-primary" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Print / Save PDF
+      </button>
+      <a href="../index.html" class="btn btn-secondary">Portfolio ↗</a>
+    </div>
+  </header>
+
+  <!-- =========================================
+       MAIN RESUME CANVAS
+       ========================================= -->
+  <main class="preview-canvas">
+    <div id="resumeSheet" class="resume-sheet theme-figma-classic">
+
+      <!-- ================= HEADER ================= -->
+      <header class="fc-header">
+        <div class="fc-title-group">
+          <h1>Guillaume Rachet</h1>
+          <div class="fc-subtitle">Lead Software Developer | Full-Stack Engineer (Angular, Scala)</div>
+          <div class="fc-specialization">Specialized in Clinical Trial SaaS &amp; High-Performance Reporting</div>
+        </div>
+        <img id="profilePhoto" src="profile.jpeg" alt="Guillaume Rachet" class="fc-photo">
+      </header>
+
+      <!-- ================= 2-COLUMN BODY ================= -->
+      <div class="fc-columns">
+
+        <!-- LEFT COLUMN: EXPERIENCE -->
+        <section class="fc-main-col">
+
+          <!-- MERATIVE - LEAD -->
+          <article class="fc-role-block">
+            <div class="fc-company-header">
+              Merative / IBM Watson Health Dublin, Ireland | <span class="dates">June 2022 – Present</span>
+            </div>
+            <div class="fc-role-title">Lead Full-Stack Software Engineer | June 2025 – Present</div>
+            <ul class="fc-bullet-list">
+              <li>
+                <strong>Architectural Transformation:</strong> Directed the migration from legacy JSP/Oracle to Angular/PostgreSQL, decommissioning 10,000+ lines of technical debt and enabling real-time report editing.
+              </li>
+              <li>
+                <strong>AI-Driven Development:</strong> Pioneered the integration of Claude Code and GitHub Copilot, utilizing AI as a force-multiplier to accelerate complex refactoring and automated test generation.
+              </li>
+              <li>
+                <strong>Technical Leadership:</strong> Lead the technical direction for platform-wide optimizations while mentoring junior developers and bridging the gap between architecture and product requirements.
+              </li>
+            </ul>
+          </article>
+
+          <!-- MERATIVE - SENIOR -->
+          <article class="fc-role-block">
+            <div class="fc-role-title">Senior Full-Stack Software Engineer | June 2022 – June 2025</div>
+            <ul class="fc-bullet-list">
+              <li>
+                <strong>Performance Engineering:</strong> Achieved a 95% reduction in execution time (150s to 7.5s) for core compliance and audit trail reports through advanced query optimization.
+              </li>
+              <li>
+                <strong>Product Innovation:</strong> Twice received the "Crushing It" award for developing a custom filtering system and Dashboard Summary that became a primary selling point for the sales team.
+              </li>
+              <li>
+                <strong>Regulatory Compliance:</strong> Engineered a granular audit trail feature for data integrity, ensuring full compliance for enterprise clinical trial clients.
+              </li>
+            </ul>
+          </article>
+
+          <!-- MERATIVE - ENGINEER -->
+          <article class="fc-role-block">
+            <div class="fc-role-title">Full-Stack Software Engineer | Oct 2021 – June 2022</div>
+            <ul class="fc-bullet-list">
+              <li>
+                <strong>Modernized Identity &amp; Access Management:</strong> Led the migration of core login systems from legacy JSP to a modern Angular/Scala architecture. Implemented secure SSO and multi-factor authentication (MFA) to meet strict regulatory standards for clinical trial data.
+              </li>
+              <li>
+                <strong>Engineered Enterprise Data &amp; Reporting:</strong> Developed high-performance interactive data tables and a Scala-based scheduled reporting engine. Enabled automated, role-based delivery of customized data exports, improving data accessibility for researchers.
+              </li>
+              <li>
+                <strong>Data Integration &amp; Process Innovation:</strong> Built a specialized Angular interface for automated data transfers via SFTP and file-upload workflows. Streamlined complex data migration processes and reduced manual overhead for enterprise-scale clinical datasets.
+              </li>
+            </ul>
+          </article>
+
+          <!-- NOKIA -->
+          <article class="fc-role-block">
+            <div class="fc-company-header">
+              Nokia Paris, France | <span class="dates">Sept 2018 – Sept 2021</span>
+            </div>
+            <div class="fc-role-title">Software Engineer | Sept 2018 – Sept 2021</div>
+            <ul class="fc-bullet-list">
+              <li>
+                Engineered a React-based enterprise platform to automate course generation and file management, significantly streamlining training workflows for global teams.
+              </li>
+              <li>
+                Integrated MS Graph API to handle seamless user authentication and automated SharePoint document management directly within the application.
+              </li>
+              <li>
+                Architected an internal review system and responsive Material-UI interface to automate the deployment of vetted content while simplifying complex administrative workflows.
+              </li>
+            </ul>
+          </article>
+
+        </section>
+
+        <!-- RIGHT COLUMN: CONTACT, SKILLS, EDUCATION -->
+        <aside class="fc-sidebar">
+
+          <!-- CONTACT -->
+          <div class="fc-sidebar-section fc-sidebar-contact">
+            <div class="fc-contact-item">📍 Dublin, Ireland</div>
+            <div class="fc-contact-item">✉️ <a href="mailto:guillaume.rachet@gmail.com">guillaume.rachet@gmail.com</a></div>
+            <div class="fc-contact-item">📞 +353 874 256 355</div>
+            <div style="height: 6px;"></div>
+            <div class="fc-contact-item">🔗 LinkedIn — <a href="https://linkedin.com/in/guillaumerachet" target="_blank">guillaume.rachet</a></div>
+            <div class="fc-contact-item">🐙 GitHub — <a href="https://github.com/grachet" target="_blank">github.com/grachet</a></div>
+            <div class="fc-contact-item">🌐 Portfolio — <a href="https://grachet.github.io" target="_blank">grachet.github.io</a></div>
+          </div>
+
+          <!-- SKILLS -->
+          <div class="fc-sidebar-section">
+            <div class="fc-skill-block">
+              <div class="fc-skill-title">Core Stack:</div>
+              <div class="fc-skill-desc">Angular, Scala, TypeScript, Java, PostgreSQL</div>
+              <div class="fc-skill-desc" style="color: #666; font-size: 10px; margin-top: 1px;">HTML5 / SCSS / Javascript ES6+</div>
+            </div>
+
+            <div class="fc-skill-block">
+              <div class="fc-skill-title">Architecture &amp; Leadership:</div>
+              <div class="fc-skill-desc">Performance Engineering, Technical Leadership, AI-Assisted Development (Claude/Copilot), RESTful API Design.</div>
+            </div>
+
+            <div class="fc-skill-block">
+              <div class="fc-skill-title">Tools &amp; Ecosystem:</div>
+              <div class="fc-skill-desc">Git, Docker, Jira, Figma, Agile/Scrum.</div>
+            </div>
+
+            <div class="fc-skill-block">
+              <div class="fc-skill-title">Languages:</div>
+              <div class="fc-skill-desc">English, French (native)</div>
+            </div>
+          </div>
+
+          <!-- EDUCATION -->
+          <div class="fc-sidebar-section">
+            <div class="fc-sidebar-heading">EDUCATION</div>
+
+            <div class="fc-edu-item">
+              <div class="fc-edu-degree">Master’s degree in Development &amp; Software Engineering</div>
+              <div class="fc-edu-school">AFORP - 2019 - 2021, Orsay France</div>
+              <div class="fc-edu-meta">Apprenticeship: 3 weeks per month at Nokia</div>
+            </div>
+
+            <div class="fc-edu-item">
+              <div class="fc-edu-degree">Bachelor's degree in Web/Mobile development</div>
+              <div class="fc-edu-school">University Institutes of Technology Paris-Saclay - 2018 - 2019, Orsay France</div>
+              <div class="fc-edu-meta">Apprenticeship: 3 days per week at Nokia</div>
+            </div>
+
+            <div class="fc-edu-item">
+              <div class="fc-edu-degree">Associate degree in Computer Science</div>
+              <div class="fc-edu-school">University Institutes of Technology Paris-Saclay - 2017 - 2018, Orsay France</div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const themes = [
+      'figma-classic',
+      'modern-exec',
+      'minimal-ats',
+      'swiss-grid',
+      'cupertino',
+      'editorial',
+      'terminal',
+      'compact',
+      'nordic',
+      'bold-leader'
+    ];
+
+    function switchTheme(themeName) {
+      const sheet = document.getElementById('resumeSheet');
+      const select = document.getElementById('themeSelect');
+      const pillButtons = document.querySelectorAll('.theme-pill-btn');
+
+      // Remove existing theme classes
+      themes.forEach(t => sheet.classList.remove('theme-' + t));
+      sheet.classList.add('theme-' + themeName);
+
+      // Sync select dropdown
+      if (select.value !== themeName) {
+        select.value = themeName;
+      }
+
+      // Sync pill active state
+      pillButtons.forEach(btn => {
+        if (btn.getAttribute('onclick').includes(themeName)) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    let photoVisible = true;
+    function togglePhoto() {
+      const photo = document.getElementById('profilePhoto');
+      const btn = document.getElementById('photoToggleIcon');
+      photoVisible = !photoVisible;
+      photo.style.display = photoVisible ? 'block' : 'none';
+      btn.textContent = photoVisible ? '📷' : '🚫';
+    }
+  </script>
+</body>
+</html>
