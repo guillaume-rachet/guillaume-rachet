@@ -17,38 +17,49 @@
       padding: 0;
     }
 
+    :root {
+      --text-primary: #111827;
+      --text-secondary: #2b2b2b;
+      --text-muted: #6b7280;
+      --accent-dark: #111827;
+    }
+
     body {
       background-color: #0f172a;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      color: #222;
-      line-height: 1.42;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-primary);
+      line-height: 1.38;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 40px 16px 80px;
+      padding: 32px 16px 64px;
     }
 
-    /* Floating Action Bar (Hidden on Print) */
+    /* =========================================
+       FLOATING ACTION BAR (Hidden on Print)
+       ========================================= */
     .action-bar {
       margin-bottom: 24px;
       display: flex;
+       flex-wrap: wrap;
       align-items: center;
-      gap: 12px;
-      background: rgba(30, 41, 59, 0.9);
+      gap: 10px;
+      background: rgba(30, 41, 59, 0.92);
       backdrop-filter: blur(8px);
       padding: 8px 16px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
     }
 
     .action-bar span {
-      font-size: 13px;
-      color: #94a3b8;
+      font-size: 12.5px;
+      color: #cbd5e1;
       font-weight: 500;
-      padding-right: 4px;
+      padding-right: 6px;
     }
 
     .btn {
@@ -57,6 +68,7 @@
       gap: 6px;
       padding: 6px 14px;
       border-radius: 999px;
+      font-family: inherit;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -78,50 +90,61 @@
       color: #f1f5f9;
     }
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.18);
     }
 
     /* =========================================
-       RESUME SHEET (A4 Dimensions)
+       RESUME SHEET (Strict A4 Geometry)
        ========================================= */
     .resume-sheet {
       width: 210mm;
-      min-height: 297mm;
+      height: 297mm;
       background: #ffffff;
-      padding: 34px 42px 34px;
-      border-top: 5px solid #111827; /* Black top accent bar */
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      padding: 36px 40px 34px;
+      border-top: 5px solid var(--accent-dark);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
       position: relative;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow: hidden;
     }
 
-    /* Header */
+    /* =========================================
+       HEADER SECTION
+       ========================================= */
     .fc-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 20px;
-      padding-top: 4px;
     }
 
     .fc-title-group h1 {
       font-size: 30px;
       font-weight: 800;
-      color: #000;
-      letter-spacing: -0.02em;
-      margin-bottom: 5px;
+      color: #000000;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 4px;
     }
 
     .fc-title-group .fc-subtitle {
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
-      color: #222;
-      margin-bottom: 3px;
+      color: #111827;
+      margin-bottom: 2.5px;
+    }
+
+    .fc-title-group .fc-subtitle span.regular {
+      font-weight: 500;
+      color: #374151;
     }
 
     .fc-title-group .fc-specialization {
-      font-size: 13.5px;
-      color: #444;
+      font-size: 13px;
+      color: #374151;
       font-weight: 500;
     }
 
@@ -130,39 +153,54 @@
       height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
-      border: 3px solid #fff;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
 
-    /* 2-Column Grid */
+    .fc-photo.hidden {
+      display: none !important;
+    }
+
+    /* =========================================
+       TWO-COLUMN BODY GRID
+       ========================================= */
     .fc-columns {
       display: grid;
-      grid-template-columns: 1fr 215px;
-      gap: 34px;
+      grid-template-columns: 1fr 210px;
+      gap: 32px;
+      flex: 1;
     }
 
-    /* Left Column: Experience */
+    /* =========================================
+       LEFT COLUMN: EXPERIENCE
+       ========================================= */
     .fc-role-block {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+    }
+    .fc-role-block:last-child {
+      margin-bottom: 0;
     }
 
     .fc-company-header {
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 700;
-      color: #333;
+      color: #000000;
       margin-bottom: 3px;
     }
 
-    .fc-company-header span.dates {
-      color: #777;
-      font-weight: 500;
+    .fc-company-header span.meta {
+      color: #6b7280;
+      font-weight: 400;
     }
 
     .fc-role-title {
-      font-size: 12.5px;
+      font-size: 12.2px;
       font-weight: 700;
-      color: #000;
-      margin-bottom: 6px;
+      color: #111827;
+      margin-bottom: 5.5px;
     }
 
     .fc-bullet-list {
@@ -173,130 +211,175 @@
 
     .fc-bullet-list li {
       position: relative;
-      padding-left: 14px;
-      font-size: 11px;
-      line-height: 1.42;
-      color: #2b2b2b;
-      margin-bottom: 6px;
+      padding-left: 13px;
+      font-size: 10.8px;
+      line-height: 1.48;
+      color: var(--text-secondary);
+      margin-bottom: 7.5px;
+    }
+
+    .fc-bullet-list li:last-child {
+      margin-bottom: 0;
     }
 
     .fc-bullet-list li::before {
       content: "•";
       position: absolute;
-      left: 2px;
-      top: -1px;
-      font-size: 12px;
-      color: #000;
+      left: 1px;
+      top: 0;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #000000;
     }
 
     .fc-bullet-list li strong {
-      color: #000;
+      color: #000000;
       font-weight: 700;
     }
 
-    /* Right Column: Contact, Skills, Education */
+    /* =========================================
+       RIGHT COLUMN: SIDEBAR
+       ========================================= */
+    .fc-sidebar {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
     .fc-sidebar-section {
       margin-bottom: 18px;
     }
+    .fc-sidebar-section:last-child {
+      margin-bottom: 0;
+    }
 
+    /* Contact Details */
     .fc-sidebar-contact {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      font-size: 11px;
-      color: #222;
+      gap: 7px;
+      font-size: 10.8px;
+      color: #111827;
       margin-bottom: 20px;
     }
 
     .fc-contact-item {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       line-height: 1.35;
     }
 
     .fc-contact-icon {
-      width: 16px;
+      width: 15px;
+      height: 15px;
       display: inline-flex;
       justify-content: center;
       align-items: center;
       flex-shrink: 0;
-      font-size: 11.5px;
+      color: #000000;
     }
 
     .fc-contact-item a {
       color: inherit;
       text-decoration: none;
     }
-
     .fc-contact-item a:hover {
       text-decoration: underline;
     }
 
-    .fc-sidebar-heading {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #718096;
-      font-weight: 700;
-      margin-bottom: 10px;
-      margin-top: 14px;
-    }
-
+    /* Skills Blocks */
     .fc-skill-block {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .fc-skill-block:last-child {
+      margin-bottom: 0;
     }
 
     .fc-skill-title {
-      font-size: 11px;
+      font-size: 10.8px;
       font-weight: 700;
-      color: #000;
-      margin-bottom: 2px;
+      color: #000000;
+      display: inline;
     }
 
     .fc-skill-desc {
       font-size: 10.5px;
-      color: #444;
-      line-height: 1.4;
+      color: #2b2b2b;
+      line-height: 1.44;
+      display: inline;
     }
 
+    .fc-skill-sub {
+      display: block;
+      font-size: 10.1px;
+      color: #4b5563;
+      margin-top: 2.5px;
+      line-height: 1.38;
+    }
+
+    /* Section Heading (EDUCATION) */
+    .fc-sidebar-heading {
+      font-size: 10.8px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 11px;
+      margin-top: 6px;
+    }
+
+    /* Education Items */
     .fc-edu-item {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .fc-edu-item:last-child {
+      margin-bottom: 0;
     }
 
     .fc-edu-degree {
-      font-size: 11px;
+      font-size: 10.8px;
       font-weight: 700;
-      color: #000;
-      line-height: 1.35;
+      color: #000000;
+      line-height: 1.34;
       margin-bottom: 2px;
     }
 
     .fc-edu-school {
-      font-size: 10.5px;
-      color: #444;
+      font-size: 10.4px;
+      color: #1f2937;
       line-height: 1.35;
     }
 
+    .fc-edu-school span.edu-date-loc {
+      color: #6b7280;
+    }
+
     .fc-edu-meta {
-      font-size: 10px;
-      color: #718096;
-      margin-top: 1px;
+      font-size: 9.8px;
+      color: #374151;
+      margin-top: 2px;
+      line-height: 1.32;
     }
 
     /* =========================================
        PRINT STYLES (Strict 1-Page Vector PDF)
        ========================================= */
     @page {
-      size: A4;
+      size: A4 portrait;
       margin: 0;
     }
 
     @media print {
-      body {
-        background: transparent !important;
+      html, body {
+        width: 210mm;
+        height: 297mm;
+        background: #ffffff !important;
         padding: 0 !important;
-        color: #000 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       .action-bar {
         display: none !important;
@@ -305,90 +388,103 @@
         box-shadow: none !important;
         margin: 0 !important;
         width: 210mm !important;
-        min-height: 297mm !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
         page-break-after: avoid !important;
         page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Bar for Online Viewing -->
+  <!-- Floating Bar for Online Viewing & Instant PDF Export -->
   <div class="action-bar">
-    <span>Guillaume Rachet — Resume</span>
-    <a href="guillaume_rachet_resume.pdf" download class="btn btn-primary">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    <span>Guillaume Rachet</span>
+    <button type="button" onclick="window.print()" class="btn btn-primary">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
       Download PDF
-    </a>
+    </button>
+    <button type="button" onclick="togglePhoto()" class="btn btn-secondary">
+      <span id="photo-toggle-icon">📷</span> Toggle Photo
+    </button>
   </div>
 
-  <!-- Main Resume Sheet -->
+  <!-- Main A4 Resume Sheet -->
   <main class="resume-sheet">
 
     <!-- Header -->
     <header class="fc-header">
       <div class="fc-title-group">
         <h1>Guillaume Rachet</h1>
-        <div class="fc-subtitle">Lead Software Developer | Full-Stack Engineer (Angular, Scala)</div>
-        <div class="fc-specialization">Specialized in Clinical Trial SaaS &amp; High-Performance Reporting</div>
+        <div class="fc-subtitle">
+          Lead Software Developer <span class="regular">| Full-Stack Engineer (Angular, Scala, Java)</span>
+        </div>
+        <div class="fc-specialization">
+          Specialized in Clinical Trial SaaS, Regulated Architecture &amp; High-Performance Reporting
+        </div>
       </div>
-      <img src="profile.jpeg" alt="Guillaume Rachet" class="fc-photo">
+      <img id="profile-photo" src="profile.jpeg" alt="Guillaume Rachet" class="fc-photo" onerror="this.style.display='none'">
     </header>
 
     <!-- 2-Column Body -->
     <div class="fc-columns">
 
-      <!-- LEFT COLUMN: EXPERIENCE -->
+      <!-- LEFT COLUMN: PROFESSIONAL EXPERIENCE -->
       <section class="fc-main-col">
 
         <!-- MERATIVE - LEAD -->
         <article class="fc-role-block">
           <div class="fc-company-header">
-            Merative / IBM Watson Health Dublin, Ireland | <span class="dates">June 2022 – Present</span>
+            Merative / IBM Watson Health <span class="meta">Dublin, Ireland | Oct 2021 – Present</span>
           </div>
           <div class="fc-role-title">Lead Full-Stack Software Engineer | June 2025 – Present</div>
           <ul class="fc-bullet-list">
             <li>
-              <strong>Architectural Transformation:</strong> Directed the migration from legacy JSP/Oracle to Angular/PostgreSQL, decommissioning 10,000+ lines of technical debt and enabling real-time report editing.
+              <strong>Architectural Transformation:</strong> Directed the core reporting migration from legacy JSP/Oracle to an event-sourced Angular 19 and PostgreSQL JSONB model behind a unified REST API, retiring 10,000+ lines of debt and scaling to 3,000+ live reports for global enterprise clients.
             </li>
             <li>
-              <strong>AI-Driven Development:</strong> Pioneered the integration of Claude Code and GitHub Copilot, utilizing AI as a force-multiplier to accelerate complex refactoring and automated test generation.
+              <strong>Regulated Grammar &amp; Logic Engine:</strong> Engineered multi-select questions and set-logic operators (<code>INTERSECTS</code>, exact-set <code>==</code>) in ANTLR 4 across 12+ Scala and TypeScript subsystems (+3,500 test lines), unblocking major enterprise clinical trial contracts.
             </li>
             <li>
-              <strong>Technical Leadership:</strong> Lead the technical direction for platform-wide optimizations while mentoring junior developers and bridging the gap between architecture and product requirements.
+              <strong>AI-Driven Leadership &amp; Reliability:</strong> Pioneered Claude Code and GitHub Copilot workflows to accelerate refactoring and TDD coverage while mentoring engineers and resolving critical GxP production escalations on rapid turnaround.
             </li>
           </ul>
         </article>
 
         <!-- MERATIVE - SENIOR -->
         <article class="fc-role-block">
-          <div class="fc-role-title">Senior Full-Stack Software Engineer | June 2022 – June 2025</div>
+          <div class="fc-role-title">Senior Full-Stack Software Engineer | May 2024 – June 2025</div>
           <ul class="fc-bullet-list">
             <li>
-              <strong>Performance Engineering:</strong> Achieved a 95% reduction in execution time (150s to 7.5s) for core compliance and audit trail reports through advanced query optimization.
+              <strong>Performance Engineering:</strong> Slashed compliance and Audit Trail report execution times by 95% (150s to 7.5s), cut cold-cache data-summary latency on 200,000+ form studies from 74s to sub-second via O(1) lookups, and reduced monitoring query times by 72%.
             </li>
             <li>
-              <strong>Product Innovation:</strong> Twice received the "Crushing It" award for developing a custom filtering system and Dashboard Summary that became a primary selling point for the sales team.
+              <strong>Product Innovation (2x Award Winner):</strong> Twice received the "Crushing It" Award for building the multi-sheet Excel Dashboard Summary and custom Excel-like column filtering across 16 core reports, becoming primary highlights in enterprise sales demos.
             </li>
             <li>
-              <strong>Regulatory Compliance:</strong> Engineered a granular audit trail feature for data integrity, ensuring full compliance for enterprise clinical trial clients.
+              <strong>FDA Compliance &amp; Async Batching:</strong> Architected FDA-compliant Participant PDF batch generation (a key requirement for signing major CRO clients) and replaced synchronous export timeouts with an asynchronous background queue and polling workflow.
             </li>
           </ul>
         </article>
 
-        <!-- MERATIVE - ENGINEER -->
+        <!-- MERATIVE / IBM - FULL-STACK -->
         <article class="fc-role-block">
-          <div class="fc-role-title">Full-Stack Software Engineer | Oct 2021 – June 2022</div>
+          <div class="fc-role-title">Full-Stack Software Engineer | Oct 2021 – May 2024</div>
           <ul class="fc-bullet-list">
             <li>
-              <strong>Modernized Identity &amp; Access Management:</strong> Led the migration of core login systems from legacy JSP to a modern Angular/Scala architecture. Implemented secure SSO and multi-factor authentication (MFA) to meet strict regulatory standards for clinical trial data.
+              <strong>Modernized Identity &amp; Access Management:</strong> Led the migration of core authentication flows from legacy JSP to Angular/Scala across 25+ new REST endpoints supporting SSO, OTP, OTL, TOTP, and WAF bot protection, retiring 11,000+ lines of legacy code.
             </li>
             <li>
-              <strong>Engineered Enterprise Data &amp; Reporting:</strong> Developed high-performance interactive data tables and a Scala-based scheduled reporting engine. Enabled automated, role-based delivery of customized data exports, improving data accessibility for researchers.
+              <strong>Enterprise Reporting &amp; API Scaling:</strong> Developed high-performance interactive report tables, role-validated scheduled email delivery, and consolidated 25 per-subject dashboard API calls into a single batch request to eliminate database bottlenecks.
             </li>
             <li>
-              <strong>Data Integration &amp; Process Innovation:</strong> Built a specialized Angular interface for automated data transfers via SFTP and file-upload workflows. Streamlined complex data migration processes and reduced manual overhead for enterprise-scale clinical datasets.
+              <strong>Data Integration &amp; SFTP Resilience:</strong> Built the core ingestion UI and job orchestrator for the enterprise data migration module, and eliminated SFTP transfer hangs by engineering configurable connection timeouts and SSH keepalives.
             </li>
           </ul>
         </article>
@@ -396,46 +492,62 @@
         <!-- NOKIA -->
         <article class="fc-role-block">
           <div class="fc-company-header">
-            Nokia Paris, France | <span class="dates">Sept 2018 – Sept 2021</span>
+            Nokia <span class="meta">Paris, France | Sept 2018 – Sept 2021</span>
           </div>
-          <div class="fc-role-title">Software Engineer | Sept 2018 – Sept 2021</div>
+          <div class="fc-role-title">Software Engineer</div>
           <ul class="fc-bullet-list">
             <li>
-              Engineered a React-based enterprise platform to automate course generation and file management, significantly streamlining training workflows for global teams.
+              Engineered a greenfield React, Node.js, CouchDB, and WebSockets platform to automate courseware generation and file management for 100+ global technical authors.
             </li>
             <li>
-              Integrated MS Graph API to handle seamless user authentication and automated SharePoint document management directly within the application.
+              Integrated Microsoft Graph API for seamless SSO, automated email notifications, and dynamic SharePoint document compilation (PowerPoint, Word, Excel) directly in-app.
             </li>
             <li>
-              Architected an internal review system and responsive Material-UI interface to automate the deployment of vetted content while simplifying complex administrative workflows.
+              Architected an internal QA review portal using React, TypeScript, GraphQL, and Material-UI connected to the corporate LMS to automate content grading and deployment workflows.
             </li>
           </ul>
         </article>
 
       </section>
 
-      <!-- RIGHT COLUMN: CONTACT, SKILLS, EDUCATION -->
+      <!-- RIGHT COLUMN: CONTACT, LINKS, SKILLS, EDUCATION -->
       <aside class="fc-sidebar">
 
-        <!-- CONTACT -->
-        <div class="fc-sidebar-section fc-sidebar-contact">
+        <!-- CONTACT WITH CRISP MONOCHROME SVGs -->
+        <div class="fc-sidebar-contact">
           <div class="fc-contact-item">
-            <span class="fc-contact-icon">📍</span>
-            <span>Dublin, Ireland</span>
-          </div>
-          <div class="fc-contact-item">
-            <span class="fc-contact-icon">✉️</span>
-            <a href="mailto:guillaume.rachet@gmail.com">guillaume.rachet@gmail.com</a>
-          </div>
-          <div class="fc-contact-item">
-            <span class="fc-contact-icon">📞</span>
-            <span>+353 874 256 355</span>
+            <span class="fc-contact-icon">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+            </span>
+            <span>Dublin, Ireland (EU Citizen)</span>
           </div>
           <div class="fc-contact-item">
             <span class="fc-contact-icon">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+              </svg>
             </span>
-            <a href="https://www.linkedin.com/in/guillaume-rachet" target="_blank">linkedin.com/in/guillaume-rachet</a>
+            <a href="mailto:guillaume.rachet@gmail.com">guillaume.rachet@gmail.com</a>
+          </div>
+          <div class="fc-contact-item">
+            <span class="fc-contact-icon">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+              </svg>
+            </span>
+            <span>+353 89 254 8122</span>
+          </div>
+          <div class="fc-contact-item">
+            <span class="fc-contact-icon">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </span>
+            <a href="https://www.linkedin.com/in/guillaume-rachet" target="_blank" rel="noopener">linkedin.com/in/guillaume-rachet</a>
           </div>
         </div>
 
@@ -443,23 +555,30 @@
         <div class="fc-sidebar-section">
           <div class="fc-skill-block">
             <div class="fc-skill-title">Core Stack:</div>
-            <div class="fc-skill-desc">Angular, Scala, TypeScript, Java, PostgreSQL</div>
-            <div class="fc-skill-desc" style="color: #666; font-size: 10px; margin-top: 1px;">HTML5 / SCSS / Javascript ES6+</div>
+            <div class="fc-skill-desc">Angular (v2–19, Signals, RxJS), Scala 2.13, TypeScript, Java, PostgreSQL (JSONB), React, Node.js</div>
+            <span class="fc-skill-sub">HTML5 / SCSS / JavaScript ES6+</span>
           </div>
 
           <div class="fc-skill-block">
             <div class="fc-skill-title">Architecture &amp; Leadership:</div>
-            <div class="fc-skill-desc">Performance Engineering, Technical Leadership, AI-Assisted Development (Claude/Copilot), RESTful API Design.</div>
+            <div class="fc-skill-desc">Performance Engineering, Event Sourcing, Batch Pipelines, ANTLR 4, AI-Assisted Dev (Claude Opus / Copilot), REST APIs (JAX-RS)</div>
+          </div>
+
+          <div class="fc-skill-block">
+            <div class="fc-skill-title">Compliance &amp; Testing:</div>
+            <div class="fc-skill-desc">FDA 21 CFR Part 11, GxP Audit Trails, IAM (SSO/MFA/TOTP), TDD, ScalaTest, Vitest, JUnit 5</div>
           </div>
 
           <div class="fc-skill-block">
             <div class="fc-skill-title">Tools &amp; Ecosystem:</div>
-            <div class="fc-skill-desc">Git, Docker, Jira, Figma, Agile/Scrum.</div>
+            <div class="fc-skill-desc">Git, Docker, Carbon Design, Monaco Editor, OpenPDF, Apache POI, Jira, Figma, Agile/Scrum</div>
           </div>
 
           <div class="fc-skill-block">
             <div class="fc-skill-title">Languages:</div>
-            <div class="fc-skill-desc">English, French (native)</div>
+            <div class="fc-skill-desc" style="display: block; margin-top: 2px; line-height: 1.36;">
+              English (Fluent)<br>French (Native)
+            </div>
           </div>
         </div>
 
@@ -469,19 +588,19 @@
 
           <div class="fc-edu-item">
             <div class="fc-edu-degree">Master’s degree in Development &amp; Software Engineering</div>
-            <div class="fc-edu-school">AFORP - 2019 - 2021, Orsay France</div>
-            <div class="fc-edu-meta">Apprenticeship: 3 weeks per month at Nokia</div>
+            <div class="fc-edu-school">AFORP - <span class="edu-date-loc">2019 - 2021, Orsay France</span></div>
+            <div class="fc-edu-meta">NFQ Level 9 Equivalent</div>
           </div>
 
           <div class="fc-edu-item">
             <div class="fc-edu-degree">Bachelor's degree in Web/Mobile development</div>
-            <div class="fc-edu-school">University Institutes of Technology Paris-Saclay - 2018 - 2019, Orsay France</div>
-            <div class="fc-edu-meta">Apprenticeship: 3 days per week at Nokia</div>
+            <div class="fc-edu-school">University Institutes of Technology Paris-Saclay - <span class="edu-date-loc">2018 - 2019, Orsay France</span></div>
+            <div class="fc-edu-meta">NFQ Level 8 Equivalent</div>
           </div>
 
           <div class="fc-edu-item">
             <div class="fc-edu-degree">Associate degree in Computer Science</div>
-            <div class="fc-edu-school">University Institutes of Technology Paris-Saclay - 2017 - 2018, Orsay France</div>
+            <div class="fc-edu-school">University Institutes of Technology Paris-Saclay - <span class="edu-date-loc">2017 - 2018, Orsay France</span></div>
           </div>
         </div>
 
@@ -490,6 +609,17 @@
     </div>
 
   </main>
+
+  <script>
+    function togglePhoto() {
+      const photo = document.getElementById('profile-photo');
+      const icon = document.getElementById('photo-toggle-icon');
+      photo.classList.toggle('hidden');
+      if (icon) {
+        icon.textContent = photo.classList.contains('hidden') ? '🚫' : '📷';
+      }
+    }
+  </script>
 
 </body>
 </html>
