@@ -7,7 +7,7 @@
 
 ## 🌐 Live Website & Showcase
 
-* **Live Resume & 10 Design Themes**: [https://guillaume-rachet.github.io/guillaume-rachet/](https://guillaume-rachet.github.io/guillaume-rachet/)
+* **Live Resume & 10 Design Themes**: [https://guillaume-rachet.github.io/](https://guillaume-rachet.github.io/)
 * **Portfolio**: [https://guillaume-rachet.github.io](https://guillaume-rachet.github.io)
 * **Direct PDF Download**: [guillaume_rachet_resume.pdf](guillaume_rachet_resume.pdf)
 
